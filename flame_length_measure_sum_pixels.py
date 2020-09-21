@@ -16,7 +16,7 @@ from matplotlib import pyplot as plt
 
 # file_name = folder_name + first_name
 
-def flame_length_measure(img):
+def flame_length_measure(img, threshold):
     img = cv.imread(img)
     
     img = img[143:1033, 24:561, :]
@@ -33,7 +33,7 @@ def flame_length_measure(img):
     # gamma = 1
     # img_theshold=np.power(img_theshold,gamma)
     img_theshold = b
-    T, img_theshold = cv.threshold(img_theshold,60, 1, cv.THRESH_BINARY)
+    T, img_theshold = cv.threshold(img_theshold,threshold, 1, cv.THRESH_BINARY)
     
     # edges = cv.Canny(img_theshold,30,200)
     
@@ -66,7 +66,16 @@ def flame_length_measure(img):
     # ax[2].set_title('threshold as 20',fontsize=24,color='k')
     
     # time.sleep(2)
+    
+  
+    ptStart = (int(k) ,0)
+    ptEnd = (int(k) ,890)
+    point_color = (0, 0, 255)
+    thickness = 8
+    lineType = 4 
+    cv.line(img, ptStart, ptEnd, point_color, thickness, lineType)
 
+    # cv.imshow('sss', img)
     
     # flame_length = []
     # flame_length.append(leftmost[0])
@@ -74,9 +83,9 @@ def flame_length_measure(img):
     k = k*0.332103321
     
    
-    return k
+    return img
     #1589279017853
     #1589278877211
     #1589278977177
     #1589278734340
-k = flame_length_measure('1589278734340-S5C3.jpeg')
+k = flame_length_measure('1589278734340-S5C3.jpeg', 50)

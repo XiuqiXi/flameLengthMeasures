@@ -36,36 +36,47 @@ del list_jpg[0:first_pos]
 flame_length_array = []
 flame_edges_array = []
 
-# from flame_length_measure_sum_pixels import flame_length_measure
-from flame_length import flame_length_measure
+from flame_length_measure_sum_pixels import flame_length_measure
+# from flame_length import flame_length_measure
 from flame_edges import flame_edges_measure_sum
 from flame_edges import flame_edges_measure
 
-number_write = open("new_flame_integral_45.txt","w")
+# number_write = open("new_flame_sum_change_threshold_20.txt","w")
 
-a = 0
-
-for k in range(0, len(list_jpg)-1, 1):
-    img = path.join(folder_name+'/'+list_jpg[k])
-    flame_length_each = flame_length_measure(img)
-    flame_length_array.append(flame_length_each)
-    str_flame_length = str(flame_length_each)
-    # str_flame_length = str_flame_length[1:]
-    # str_flame_length = str_flame_length[:-1]
-    number_write.write(str_flame_length+"\n")
-    a = a+1
-    b = len(list_jpg) - a
-    print(b)
+# a = 0
+# time = np.linspace(18.4, 541, 15577)
+# for k in range(0, len(list_jpg)-1, 1):
+#     img = path.join(folder_name+'/'+list_jpg[k])
+#     if time[k]<100:
+#         threshold = 15
+#     elif (time[k]>100 and time[k]<300):
+#         threshold = 20
+#     elif (time[k]>300 and time[k]<400):
+#         threshold = 25
+#     elif (time[k]>400 and time[k]<4450):
+#         threshold = 20
+#     elif time[k]>450:
+#         threshold = 15
+        
+#     flame_length_each = flame_length_measure(img, 20)
+#     flame_length_array.append(flame_length_each)
+#     str_flame_length = str(flame_length_each)
+#     # str_flame_length = str_flame_length[1:]
+#     # str_flame_length = str_flame_length[:-1]
+#     number_write.write(str_flame_length+"\n")
+#     a = a+1
+#     b = len(list_jpg) - a
+#     print(b)
     
-number_write.close()
+# number_write.close()
 
-# number_write = open("flame_edges_max_2.txt","w")
+# number_write = open("flame_edges_mean.txt","w")
 
 # a = 0
 
 # for k in range(0, len(list_jpg)-1, 1):
 #     img = path.join(folder_name+'/'+list_jpg[k])
-#     flame_edges_each = flame_edges_measure(img)
+#     flame_edges_each = flame_edges_measure_sum(img)
 #     flame_edges_array.append(flame_edges_each)
 #     str_edges_length = str(flame_edges_each)
 #     # str_flame_length = str_flame_length[1:]
@@ -77,29 +88,35 @@ number_write.close()
     
 # number_write.close()
 
-# fps = 30
-# size=(580,400)
-# fourcc = cv.VideoWriter_fourcc(*'XVID')
-# videoWriter = cv.VideoWriter('3.avi',fourcc,fps,size)
+fps = 30
+size=(537,890)
+# fourcc = cv.VideoWriter_fourcc('P', 'I', 'M', 'I')
+fourcc = cv.VideoWriter_fourcc(*'XVID')
+videoWriter = cv.VideoWriter('3_sum_threshold_15.avi',fourcc,fps,size)
+a = 0
     
-# for k in range(0, len(list_jpg)-1, 22):
-#     img = path.join(folder_name+'/'+list_jpg[k])
-#     img_orig = cv.imread(img)
-#     flame_length_each = flame_length_measure(img)
-#     cv.imwrite('T.jpg',flame_length_each)
-#     img_theshold = cv.imread('T.jpg')
-#     k = k*0.03
-#     cv.putText(img_theshold,str(k), (100,300), cv.FONT_HERSHEY_SIMPLEX, 0.7,(0,0,255), 1, cv.LINE_AA)
-#     videoWriter.write(img_theshold)
+time = np.linspace(18.4, 541, 15577)
+for k in range(0, len(list_jpg)-1, 1):
+    img = path.join(folder_name+'/'+list_jpg[k])
+    img_orig = cv.imread(img)
+    flame_length_each = flame_length_measure(img, 15)
+    cv.imwrite('T.jpg',flame_length_each)
+    img_theshold = cv.imread('T.jpg')
+    time_point = time[k]
+    cv.putText(img_theshold,str(time_point), (400,300), cv.FONT_HERSHEY_SIMPLEX, 0.7,(0,0,255), 1, cv.LINE_AA)
+    videoWriter.write(img_theshold)
+    a = a+1
+    b = len(list_jpg) - a
+    print(b)
 
-# videoWriter.release()
+videoWriter.release()
 
 
 number_write = open("Time_reduce.txt","w")
 
 a = 0
 
-for k in np.linspace(18.4, 541, 156):
+for k in np.linspace(18.4, 541, 15577):
     k = str(k)
     # str_flame_length = str_flame_length[1:]
     # str_flame_length = str_flame_length[:-1]
